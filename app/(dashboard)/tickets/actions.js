@@ -6,21 +6,23 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 export async function addTicket(formData) {
-  const ticket = Object.fromEntries(formData)
 
   const supabase = createServerActionClient({ cookies })
-
+const {title, body, priority} = formData;
+  console.log("formdata", formData);
   // get current user session
   const { data: { session } } = await supabase.auth.getSession()
-
-  // insert the data
-  const { error } = await supabase.from('tickets')
-    .insert({
-      ...ticket,
-      user_email: session.user.email,
-    })
+  const { data, error } = await supabase
+  .from('tickets')
+  .insert([
+    { title: title, body: body, priority: priority },
+  ])
+  .select()
+  console.log("success")
+        
   
     if (error) {
+      console.log("Error", error);
       throw new Error('Could not add the new ticket.')
     }
 
