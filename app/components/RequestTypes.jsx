@@ -3,11 +3,11 @@ import Link from 'next/link'
 
 export default function RequestTypes(props) {
   return (
-    <Link href='/tickets/create'>
+    <Link href={props.href}>
         <div
-            className='w-20 h-6  bg-primary'
+            className='m-4 btn-primary rounded-md'
            >
-           <h2 className='text-white px-2'>Results</h2>
+           <h3 className='text-white p-2'>{props.title}</h3>
         </div>
     </Link>
   )

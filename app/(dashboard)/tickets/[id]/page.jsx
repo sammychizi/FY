@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
     .single()
 
   return {
-    title: `Query Tracker | ${ticket?.title || 'Ticket not Found'}`
+    title: `Query Tracker | ${ticket?.request || 'Ticket not Found'}`
   }
 }
 
@@ -52,11 +52,11 @@ export default async function TicketDetails({ params }) {
         </div>
       </nav>
       <div className="card">
-        <h3>{ticket.title}</h3>
+        <h3>{ticket.request}</h3>
         <small>Created by {ticket.user_email}</small>
         <p>{ticket.body}</p>
-        <div className={`pill ${ticket.priority}`}>
-          {ticket.priority} priority
+        <div className={`pill ${ticket.document}`}>
+          {ticket.document}
         </div>
       </div>
     </main>

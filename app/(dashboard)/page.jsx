@@ -11,10 +11,15 @@ export default function Home() {
           <button className="btn-primary">View Tickets</button>
         </Link>
       </div> */}
-      <Link href='/requestCategories' className="ml-auto">
-          <button className="btn-primary">Make A Request</button>
+      <div className="flex justify-center items-center p-8">
+        <Link href='/requestCategories' className="m-8">
+            <button className="btn-primary">New Request</button>
         </Link>
-      
+
+        <Link href='/myRequests' className="m-8">
+            <button className="btn-primary">Previous Requests</button>
+        </Link>
+      </div>
     </main>
   )
 }

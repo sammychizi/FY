@@ -6,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js'
 
 
-export default function CreateForm() {
+export default function CreateForm(props) {
 const router = useRouter()
   // Create a single supabase client for interacting with your database
 const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxzeWZzYWJlbWVqdmZxcnNlbmZjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDA1NDA0MDQsImV4cCI6MjAxNjExNjQwNH0.qcmC3XqFOST1fitpYdh6nU2SRxJYk-niG2WSdYwsESk')
-  const [title, setTitle] = useState('');
+  const [request, setRequest] = useState('');
   const [body, setBody] = useState('');
-  const [priority, setPriority] = useState('low');
+  const [document, setDocument] = useState('');
 
   // Add status state------------------------------------------------------------------------------
   const [status, setStatus] = useState('Pending reviewal'); 
@@ -30,9 +30,9 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
       // Simulate an API request or dispatch an action to add the ticket
       // Replace the following with your actual data storage logic
       const formData = {
-        title,
+        request,
         body,
-        priority,
+        document,
         status: 'submitted: Pending reviewal'
       };
       console.log('Submitting:', formData);
@@ -42,7 +42,7 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
      const { data, error } = await supabase
   .from('tickets')
   .insert([
-    { title: title, body: body, priority: priority, status:status },
+    { request: request, body: body, document: document, status:status },
   ])
   .select()
   console.log("data", data)
@@ -57,7 +57,7 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
         
 
       // Reset form values and loading status after successful submission
-      setTitle('');
+      setRequest('');
       setBody('');
       setPriority('low');
       //setStatus------------------------------------------------------------
@@ -76,16 +76,30 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
   return (
     <form onSubmit={handleSubmit} className="w-1/2">
       <label>
-        <span>Title:</span>
-        <input required type="text" value={title}
-          onChange={(e) => setTitle(e.target.value)} />
+      <span>Request:</span>
+        <select value={props.request}
+          onChange={(e) => setRequest(e.target.value)}>
+          <option value={"choose request"}>Choose request type</option>
+          <option value={props.request1}>{props.request1}</option>
+          <option value={props.request2}>{props.request2}</option>
+        </select>
       </label>
+
       <label>
-        <span>Body:</span>
-        <textarea required  value={body}
+        <span>Description:</span>
+        <textarea required  value={props.body}
           onChange={(e) => setBody(e.target.value)} />
       </label>
       <label>
+        <span>{props.document}</span>
+        <input
+          type='file'
+          value={props.document}
+          onChange={(e) => setDocument(e.target.value)}
+        />
+      </label>
+
+      {/* <label>
         <span>Priority:</span>
         <select value={priority}
           onChange={(e) => setPriority(e.target.value)}>
@@ -93,7 +107,7 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
           <option value="medium">Medium Priority</option>
           <option value="high">High Priority</option>
         </select>
-      </label>
+      </label> */}
       <SubmitButton />
     </form>
   )
