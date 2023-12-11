@@ -94,7 +94,7 @@ const supabase = createClient('https://lsyfsabemejvfqrsenfc.supabase.co', 'eyJhb
         <span>{props.document}</span>
         <input
           type='file'
-          value={props.document}
+          value=""
           onChange={(e) => setDocument(e.target.value)}
         />
       </label>

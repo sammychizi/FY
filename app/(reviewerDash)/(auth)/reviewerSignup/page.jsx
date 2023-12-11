@@ -36,7 +36,7 @@ const handleSubmit = async (e) =>{
 
   return (
     <>
-        <h1>Sign up</h1>
+        <h1 className="flex justify-center">Sign up</h1>
         <form onSubmit={handleSubmit}>
             <label>
                 <span>Full Name:</span>
